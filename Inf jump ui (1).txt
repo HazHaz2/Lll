@@ -2,12 +2,97 @@ local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOog
 local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
 local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
 
-local InfiniteJumpSetup = loadstring(game:HttpGetAsync("UR GITHUB HERE"))()
+local InfiniteJumpSetup = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/HazHaz2/Lll/refs/heads/main/Inf%20jump%20(Github).txt"))()
 local InfiniteJump = InfiniteJumpSetup()
+
+-- Main Tab
+local Main = window:AddTab("Main")
+local folder = Main:AddFolder("Brawl")
+
+-- God Mode Toggle
+local godModeToggle = false
+folder:AddSwitch("God Mode (Brawl)", function(State)
+    godModeToggle = State
+    if State then
+        task.spawn(function()
+            while godModeToggle do
+                game:GetService("ReplicatedStorage").rEvents.brawlEvent:FireServer("joinBrawl")
+                task.wait(0)
+            end
+        end)
+    end
+end)
+
+-- Misc Tab
+local folder2 = Main:AddFolder("Misc")
+
+-- Destroy Ad Teleport Button
+folder2:AddButton("Destroy Ad Teleport", function()
+    local part = workspace:FindFirstChild("RobloxForwardPortals")
+    if part then
+        part:Destroy()
+    end
+end)
+
+local autoSizeLoop = nil
+
+local switch = Rebirth:AddSwitch("Auto Size 2", function(state)
+    if state then
+        autoSizeLoop = task.spawn(function()
+            while task.wait(0) do
+                game:GetService("ReplicatedStorage").rEvents.changeSpeedSizeRemote:InvokeServer("changeSize", 2)
+            end
+        end)
+    else
+        if autoSizeLoop then
+            task.cancel(autoSizeLoop)
+            autoSizeLoop = nil
+        end
+    end
+end)
+
+local switch = Rebirth:AddSwitch("Hide All Frames", function(state)
+    local rSto = game:GetService("ReplicatedStorage")
+		for _, obj in pairs(rSto:GetChildren()) do
+			if obj.Name:match("Frame$") then
+				obj.Visible = not state
+			end
+		end
+end)
+
+Rebirth:AddLabel("---Op Stuff---")
+
+local switch = Rebirth:AddSwitch("Fast Rebirths", function(state)
+    if state then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/0o0o0o0o0o0o0o0o0o0o0o0o/0o0o0o0o/refs/heads/main/Kk"))()
+    end
+end)
+
+local switch = Rebirth:AddSwitch("Speed Grind (No Rebirth)", function(Value)
+    local isGrinding = Value
+
+    if not Value then
+        return
+    end
+
+    for i = 1, 12 do
+        task.spawn(function()
+            while isGrinding do
+                game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+                task.wait(0.083)
+            end
+        end)
+    end
+end)
+local Credits = window:AddTab("Credits")
+
+Credits:AddLabel("Private version")
+Credits:AddLabel("Script Made By Ur daddy Haz")
+Credits:AddLabel("Discord: zziblamehazz
 
 local Window = Library:CreateWindow{
     Title = `Fluent {Library.Version}`,
-    SubTitle = "by Actual Master Oogway",
+    SubTitle = "by IblameHaz ur daddy",
     TabWidth = 160,
     Size = UDim2.fromOffset(830, 525),
     Resize = true,
